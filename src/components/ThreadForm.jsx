@@ -9,15 +9,22 @@ export default function ThreadForm({ onCreate }) {
   const [title, setTitle] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     const trimmed = title.trim();
     if (!trimmed) return;
     setSubmitting(true);
-    await onCreate(trimmed);
-    setTitle("");
-    setSubmitting(false);
-    setOpen(false);
+    setError("");
+    try {
+      await onCreate(trimmed);
+      setTitle("");
+      setOpen(false);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -45,9 +52,12 @@ export default function ThreadForm({ onCreate }) {
             autoFocus
             className="w-full bg-zinc-800 text-zinc-100 placeholder-zinc-600 rounded-lg px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-cyan-500 resize-none transition-all duration-150"
           />
+          {error && (
+            <p className="mt-2 text-xs text-red-400 font-mono">{error}</p>
+          )}
           <div className="flex justify-end gap-2 mt-3">
             <button
-              onClick={() => { setOpen(false); setTitle(""); }}
+              onClick={() => { setOpen(false); setTitle(""); setError(""); }}
               className="px-4 py-2 text-sm rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
             >
               キャンセル

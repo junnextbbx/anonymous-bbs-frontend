@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { mockService } from "../services/mockService";
+import { checkAndRecordPost, checkAndRecordThread } from "../services/rateLimiter";
 
 // ----- スレッド一覧用 -----
 export function useThreads() {
@@ -24,6 +25,8 @@ export function useThreads() {
   }, [fetchThreads]);
 
   const createThread = useCallback(async (title) => {
+    const result = checkAndRecordThread();
+    if (!result.ok) throw new Error(result.message);
     const newThread = await mockService.createThread(title);
     setThreads((prev) => [newThread, ...prev]);
     return newThread;
@@ -50,6 +53,8 @@ export function usePosts(threadId) {
   }, [fetchPosts]);
 
   const createPost = useCallback(async (body) => {
+    const result = checkAndRecordPost();
+    if (!result.ok) throw new Error(result.message);
     const newPost = await mockService.createPost(threadId, body);
     setPosts((prev) => [...prev, newPost]);
     return newPost;

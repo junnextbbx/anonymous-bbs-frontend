@@ -8,14 +8,21 @@ import { useState } from "react";
 export default function PostForm({ onSubmit }) {
   const [body, setBody] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     const trimmed = body.trim();
     if (!trimmed) return;
     setSubmitting(true);
-    await onSubmit(trimmed);
-    setBody("");
-    setSubmitting(false);
+    setError("");
+    try {
+      await onSubmit(trimmed);
+      setBody("");
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -31,6 +38,9 @@ export default function PostForm({ onSubmit }) {
         rows={3}
         className="w-full bg-zinc-800 text-zinc-100 placeholder-zinc-600 rounded-lg px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-cyan-500 resize-none transition-all duration-150"
       />
+      {error && (
+        <p className="mt-2 text-xs text-red-400 font-mono">{error}</p>
+      )}
       <div className="flex items-center justify-between mt-3">
         <span className="text-xs text-zinc-600">匿名投稿</span>
         <button
