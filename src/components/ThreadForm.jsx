@@ -32,7 +32,7 @@ export default function ThreadForm({ onCreate }) {
       {!open ? (
         <button
           onClick={() => setOpen(true)}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed border-zinc-600 text-zinc-400 hover:border-cyan-500 hover:text-cyan-400 transition-all duration-200 text-sm font-medium tracking-wide group"
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed border-zinc-600 text-zinc-300 hover:border-cyan-500 hover:text-cyan-400 transition-all duration-200 text-base font-medium group"
         >
           <span className="text-lg group-hover:rotate-90 transition-transform duration-200">+</span>
           新しいスレッドを立てる
@@ -50,22 +50,22 @@ export default function ThreadForm({ onCreate }) {
             placeholder="スレッドのタイトルを入力..."
             rows={2}
             autoFocus
-            className="w-full bg-zinc-800 text-zinc-100 placeholder-zinc-600 rounded-lg px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-cyan-500 resize-none transition-all duration-150"
+            className="w-full bg-zinc-800 text-zinc-100 placeholder-zinc-600 rounded-lg px-4 py-3 text-base outline-none focus:ring-1 focus:ring-cyan-500 resize-none transition-all duration-150"
           />
           {error && (
-            <p className="mt-2 text-xs text-red-400 font-mono">{error}</p>
+            <p className="mt-2 text-sm text-red-400">{error}</p>
           )}
           <div className="flex justify-end gap-2 mt-3">
             <button
               onClick={() => { setOpen(false); setTitle(""); setError(""); }}
-              className="px-4 py-2 text-sm rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="px-4 py-2 text-base rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
             >
               キャンセル
             </button>
             <button
               onClick={handleSubmit}
               disabled={!title.trim() || submitting}
-              className="px-5 py-2 text-sm rounded-lg bg-cyan-500 text-zinc-950 font-semibold hover:bg-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="px-5 py-2 text-base rounded-lg bg-cyan-500 text-zinc-950 font-semibold hover:bg-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               {submitting ? "作成中..." : "作成"}
             </button>

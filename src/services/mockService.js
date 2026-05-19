@@ -50,13 +50,14 @@ export const mockService = {
   },
 
   // スレッド新規作成
-  async createThread(title) {
+  async createThread(title, createdBy) {
     await delay();
     const newThread = {
       id: String(Date.now()),
       title,
       createdAt: new Date().toISOString(),
       postCount: 0,
+      createdBy,
     };
     threads = [newThread, ...threads];
     posts[newThread.id] = [];
@@ -70,13 +71,14 @@ export const mockService = {
   },
 
   // 投稿作成
-  async createPost(threadId, body) {
+  async createPost(threadId, body, createdBy) {
     await delay();
     const newPost = {
       id: `p${Date.now()}`,
       threadId,
       body,
       createdAt: new Date().toISOString(),
+      createdBy,
     };
     if (!posts[threadId]) posts[threadId] = [];
     posts[threadId] = [...posts[threadId], newPost];

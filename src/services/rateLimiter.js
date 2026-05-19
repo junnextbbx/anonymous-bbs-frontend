@@ -9,11 +9,27 @@
 // ============================================================
 
 const ANON_ID_KEY = "anon_bbs_id";
+const DISPLAY_NAME_KEY = "anon_bbs_name";
 
 // ---- 匿名ID ------------------------------------------------
 
 function generateId() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/** localStorageから表示名を取得する。未設定なら空文字を返す。 */
+export function getDisplayName() {
+  return localStorage.getItem(DISPLAY_NAME_KEY) ?? "";
+}
+
+/** 表示名をlocalStorageに保存する。空文字の場合は削除する。 */
+export function setDisplayName(name) {
+  const trimmed = name.trim();
+  if (trimmed) {
+    localStorage.setItem(DISPLAY_NAME_KEY, trimmed);
+  } else {
+    localStorage.removeItem(DISPLAY_NAME_KEY);
+  }
 }
 
 /** localStorageから匿名IDを取得。未存在なら生成して保存する。 */
