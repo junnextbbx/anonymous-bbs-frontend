@@ -7,8 +7,23 @@ const items = [
   { label: "サービス名", value: "anonymous board" },
   { label: "バージョン",  value: "0.1.0" },
   { label: "概要",       value: "ログイン不要・アカウント登録不要で誰でも匿名で書き込める掲示板です。" },
-  { label: "技術スタック", value: "React / Vite / Tailwind CSS / FastAPI / SQLite" },
-  { label: "お問い合わせ", value: "管理者への連絡手段は現在準備中です。" },
+  { label: "技術スタック", value: "React / Vite / Tailwind CSS / FastAPI / PostgreSQL" },
+  {
+    label: "お問い合わせ",
+    value: (
+      <span>
+        お問い合わせは以下のGoogleフォームからお願い致します。<br />
+        <a
+          href="https://forms.gle/3FKBEqGLyMAwF6mu8"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cyan-400 hover:underline break-all"
+        >
+          https://forms.gle/3FKBEqGLyMAwF6mu8
+        </a>
+      </span>
+    ),
+  },
 ];
 
 export default function AboutPage() {
