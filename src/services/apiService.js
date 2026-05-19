@@ -4,7 +4,7 @@
 // mockService と同じインターフェースを持ち、順次差し替えていく
 // ============================================================
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000/api";
 
 /** APIレスポンス(snake_case)をフロント形式(camelCase)に変換 */
 function toThread(t) {
