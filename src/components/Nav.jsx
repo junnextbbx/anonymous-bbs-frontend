@@ -12,7 +12,7 @@ const links = [
   { to: "/about",    label: "About"        },
 ];
 
-export default function Nav() {
+export default function Nav({ onNavigate }) {
   return (
     <nav className="relative z-10 w-full px-5 py-10 flex flex-col gap-8">
       {/* ロゴ */}
@@ -29,6 +29,7 @@ export default function Nav() {
               <NavLink
                 to={to}
                 end
+                onClick={onNavigate}
                 className={({ isActive }) =>
                   `block text-base py-1.5 pl-3 border-l-2 transition-colors ${
                     isActive

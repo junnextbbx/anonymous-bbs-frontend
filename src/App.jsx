@@ -36,18 +36,59 @@ function BoardPage() {
 }
 
 export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="h-screen overflow-hidden bg-zinc-950 text-zinc-100 flex">
-{/* 左カラム: ナビ（md以上で表示） */}
-      <div className="hidden md:block w-[15%] shrink-0 border-r border-zinc-800">
-        <Nav />
+
+      {/* ハンバーガーボタン（モバイルのみ） */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"
+        onClick={() => setMenuOpen(true)}
+        aria-label="メニューを開く"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect y="3"  width="20" height="2" rx="1" fill="currentColor"/>
+          <rect y="9"  width="20" height="2" rx="1" fill="currentColor"/>
+          <rect y="15" width="20" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+
+      {/* オーバーレイ（モバイル・メニューオープン時） */}
+      {menuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black/60"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+
+      {/* 左カラム: ナビ（PCは常時表示・モバイルはドロワー） */}
+      <div className={`
+        fixed md:static inset-y-0 left-0 z-50
+        w-[70%] max-w-xs md:w-[15%]
+        border-r border-zinc-800 bg-zinc-950
+        transform transition-transform duration-300 ease-in-out
+        md:translate-x-0
+        ${menuOpen ? "translate-x-0" : "-translate-x-full"}
+      `}>
+        {/* 閉じるボタン（モバイルのみ） */}
+        <button
+          className="md:hidden absolute top-4 right-4 p-1 text-zinc-500 hover:text-zinc-200 transition-colors"
+          onClick={() => setMenuOpen(false)}
+          aria-label="メニューを閉じる"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        </button>
+        <Nav onNavigate={() => setMenuOpen(false)} />
       </div>
 
       {/* 中央カラム: メイン + フッター */}
       <div className="flex flex-col flex-1 min-w-0 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-        <main className="relative z-10 flex-1 px-8 py-12">
+        <main className="relative z-10 flex-1 px-8 pt-20 pb-12 md:pt-12">
           <Routes>
-            <Route path="/"      element={<BoardPage />} />
+            <Route path="/"         element={<BoardPage />} />
             <Route path="/rules"    element={<RulesPage />} />
             <Route path="/about"    element={<AboutPage />} />
             <Route path="/settings" element={<SettingsPage />} />
